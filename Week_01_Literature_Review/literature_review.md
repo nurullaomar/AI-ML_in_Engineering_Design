@@ -28,4 +28,40 @@
 ### Candidate B — Manufacturability-aware generative design for low-cost assistive parts
 
 * **Problem & Local Relevance:** Assistive devices (e.g. hand/finger prostheses, orthotic brackets) are often 3D-printed locally on low-cost FDM printers. Designs optimized purely for strength frequently fail to print well on such hardware, wasting filament and time in exactly the resource-limited settings that most need them.
-* **
+* **Prior Art Found:** Generative design and topology optimization that output print-ready parts are well covered, including RL- and FEA-guided 2025 frameworks and ASME reviews. Manufacturability is usually treated via generic constraints (overhang angle, minimum feature size) rather than the real behavior of a specific low-cost printer.
+* **Gap:** Optimizing assistive-part geometry against an empirically-learned model of a specific low-cost FDM printer’s failure modes — not idealized rules — is underexplored.
+* **My Contribution:** Learn a printability model from print outcomes on an accessible FDM machine, then fold it into a design loop so generated parts are both structurally sound and reliably printable on low-cost hardware. Validate by print-success rate vs. a strength-only baseline.
+* **Feasibility:** *Medium.* Needs some real printing for printability data (modest hardware), plus simulation and ML — heavier logistics than A.
+* **Mentor Fit & ML Justification:** Seymur (DFM, additive manufacturing); Elvin (the learned printability model). ML is justified because a printer’s real failure behavior is not closed-form and must be learned.
+
+### Candidate C — Surrogate-accelerated design of compliant assistive mechanisms
+
+* **Problem & Local Relevance:** Compliant mechanisms (single-piece flexible structures) make cheap, robust assistive devices — prosthetic fingers, adaptive grippers — because they have no assembled joints to fail. Designing them requires repeated nonlinear FEA, which is slow and expert-bound.
+* **Prior Art Found:** Compliant mechanism design and topology optimization are established; ML surrogates for FEA exist generally. Most compliant-mechanism work targets idealized benchmarks rather than manufacturable assistive parts, and few couple a surrogate to an assistive-device design loop.
+* **Gap:** A surrogate that predicts compliant-mechanism behavior (deflection, stress, grip force) fast enough to search assistive-device designs interactively, validated on a real printable part.
+* **My Contribution:** Build the surrogate from FEA data and use it to explore compliant assistive-gripper designs orders of magnitude faster than direct FEA, then validate the chosen design physically.
+* **Feasibility:** *Medium.* Strong simulation + ML core; optional light hardware for validation.
+* **Mentor Fit & ML Justification:** Seymur (compliant mechanisms, FEA — close to his Harvard gripper advising); Elvin (surrogate modeling). Nonlinear compliant-mechanism FEA is expensive, so the surrogate enables otherwise-impractical search.
+
+---
+
+## 3. Recommendation
+
+I recommend **Candidate A — predicting prosthetic socket fit before fabrication**. It is the strongest on every axis.
+
+1. **Tangible Local Impact:** Better-fitting sockets with less dependence on scarce expert prosthetists, directly relevant to limb-loss patients in Azerbaijan including post-conflict and landmine cases.
+2. **Verified Academic Gap:** The prior-art check shows a real, explicitly-stated gap — the literature itself asks for a system that predicts fit before fabrication — rather than crowded ground.
+3. **Justified Machine Learning:** ML is unambiguously justified because it replaces a slow, expert-bound FEA loop with an instant design-time predictor, directly answering our architectural core constraints.
+4. **Timeline Feasibility:** Highly feasible remotely in 3–4 months on mostly public or simulable data with free compute.
+5. **Dual-Mentor Multiplier:** It is the candidate that most needs both advisors. Seymur anchors the biomechanics, FEA ground truth, and manufacturability; Elvin anchors the surrogate model, data pipeline, and training rigor. The project is not credible from either side alone, which makes the mentorship pairing a genuine multiplier.
+
+Candidates B and C are good fallbacks — B if we want a stronger manufacturing/hardware flavor, C if we want to stay closest to Seymur’s compliant-mechanism work — but A has the absolute best combination of tangible impact, a verified gap, justified ML, and dual-mentor fit.
+
+---
+
+## 4. Questions for Our Call
+
+1. Do you agree Candidate A is the strongest, or would you weight B or C higher given hardware access and your time?
+2. For the training data: does it make sense to generate FEA (Finite Element Analysis) cases from public or parametric limb shapes? And what FEA setup would you trust for the interface-pressure labels?
+3. **Elvin** — what model type and testing approach would you want from the start so the results hold up?
+4. What would each of you want to see by the end of Week 2 to feel sure we picked the right project?
